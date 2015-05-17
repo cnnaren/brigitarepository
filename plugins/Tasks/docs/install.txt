@@ -1,0 +1,114 @@
+########################################################
+# 	Mantis Bugtracker Add-On
+# 	Tasks Version 1.10
+#	2010 plugin by Cas Nuy www.NUY.info
+########################################################
+
+This plugin allows to assign tasks to other authorised handlers within the current project.
+Every tasks has :
+Handler
+Creation date	(automatic)
+Change date		(automatic)
+Due  date		(to be set once)
+Finished date	(to be set by authorised person)
+Title 			( 50 characters )
+Description		( 250 characters )
+Response		( 250 characters )
+Once a task has been reported complete, it can only be deleted by authorised staff. Maintenance is no longer possible.
+Upon adding a task, the person you assign it to wil receive an email in case plugin is configured to do.
+Equally from every change, History records can be created in case plugin is configured to do.
+
+Default the overview with tasks is presented where the event_hook 'EVENT_VIEW_BUG_EXTRA' is positioned.
+If you like to have it on top of the page, simply change the following line in tasks.php:
+		plugin_event_hook( 'EVENT_VIEW_BUG_EXTRA', 'tasks_form1' );
+into
+		plugin_event_hook( 'EVENT_VIEW_BUG_DETAILS', 'tasks_form1' );
+
+In case you would like to have it just below the details, replace the following line in tasks.php:
+		plugin_event_hook( 'EVENT_VIEW_BUG_EXTRA', 'tasks_form1' );
+with
+		event_declare('EVENT_VIEW_BUG_DETAILS2');
+		plugin_event_hook( 'EVENT_VIEW_BUG_DETAILS2', 'tasks_form1' );
+
+In that case, you need to position the following line somewhere in bug_view_inc.php.
+Search the line holding "# User list monitoring the bug" around line 686 and add the following line just before:
+		event_signal( 'EVENT_VIEW_BUG_DETAILS2', array( $tpl_bug_id ) );
+
+********************************************************************************************
+* Installation                                                                             *
+********************************************************************************************
+Like any other plugin. 
+After copying to your webserver :
+- Start mantis ad administrator
+- Select manage
+- Select manage Plugins
+- Select Install behind Tasks 1.01
+- Once installed, click on the plugin-name for further configuration.
+
+
+In case you want to show the tasks within the MyView page (opposite in the menu), you need to define a signal in my_view_page.php.
+Then add the following line richt after "print_recently_visited();"
+event_signal( 'EVENT_MYVIEW' ); 
+
+For version 1.2.1 make sure to have this statement in confg_inc.php:
+$g_path          = 'http://path to your mantis installation/';
+
+In case the table is not correctly created, use the following SQL command:
+CREATE TABLE IF NOT EXISTS `mantis_plugin_tasks_defined_table` (
+  `task_id` int(11) NOT NULL auto_increment,
+  `bug_id` int(11) default NULL,
+  `task_user` int(11) default NULL,
+  `task_handler` int(11) default NULL,
+  `task_title` varchar(50) default NULL,
+  `task_desc` varchar(250) default NULL,
+  `task_response` varchar(250) default NULL,
+  `task_created` datetime default NULL,
+  `task_changed` datetime default NULL,
+  `task_due` datetime default '0000-00-00 00:00:00',
+  `task_completed` datetime default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`task_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+
+********************************************************************************************
+Configuration options                                                                      *
+********************************************************************************************
+// Who is allowed to manage this plugin
+tasks_admin_treshold	=	ADMINISTRATOR
+
+// Who is allowed to add tasks
+tasks_add_treshold		= 	DEVELOPER
+
+// Who is allowed to view tasks 
+tasks_view_treshold		= 	VIEWER
+
+// Who is allowed to update tasks 
+tasks_update_treshold		= 	DEVELOPER
+
+// Who is allowed to mark tasks complete
+tasks_finish_treshold		= 	DEVELOPER
+
+// Who is allowed to delete tasks
+tasks_delete_treshold	= 	DEVELOPER
+
+// Do we send an email when adding task?
+tasks_mail				=	OFF
+
+// Do we keep history of activities
+tasks_history			=	OFF
+
+********************************************************************************************
+License                                                                                    *
+********************************************************************************************
+This plugin is distributed under the same conditions as Mantis itself.
+
+********************************************************************************************
+Mantis Issue                                                                               *
+********************************************************************************************
+http://www.mantisbt.org/bugs/view.php?id=3698
+
+********************************************************************************************
+Greetings                                                                                  *
+********************************************************************************************
+Cas Nuy 
+cas@nuy.info
+http://www.nuy.info

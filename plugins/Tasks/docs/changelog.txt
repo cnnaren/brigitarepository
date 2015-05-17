@@ -1,0 +1,15 @@
+Version 1.01		11-05-2010		Initial release
+Version 1.02		12-05-2010		Lay-out changes
+									Htmlentities for all textfields
+									Enlarged textfields to 250 chars
+Version 1.03		07-06-2010		Fixed missing laguage description
+Version 1.04		10-06-2010		Fixed problem with Missing Parameter message
+Version 1.05		10-08-2010		Fixed wrong emails
+									Added option to send email upon finishing
+									Allowed uses to manage the task
+									Thanks to ISTVANB
+Version 1.06		03-09-2010		Added My_Tasks page for the main menu	
+Version 1.07						Improved selection of My_Tasks page		
+Version 1.08		10-12-2010		Bugfix
+Version 1.10		23-12-2010		Made handler level configurable		
+									Option to show tasks on MyView page

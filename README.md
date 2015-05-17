@@ -1,2 +1,0 @@
-# brigitarepository
-Brigita Repository
